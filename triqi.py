@@ -5,22 +5,20 @@ def mostrar_tablero(tablero):
         print(" | ".join(fila))
     print()
 
-def jugada_automatica(tablero):
-    # Encuentra las posiciones vacías en el tablero
-    posiciones_vacias = [(i, j) for i in range(3) for j in range(3) if tablero[i][j] == " "]
-    if posiciones_vacias:
-        # Elige una posición aleatoria vacía
-        i, j = random.choice(posiciones_vacias)
-        tablero[i][j] = "O"
+def partida_completa(tablero):
+    # Alterna entre "X" y "O" para simular una partida
+    turnos = ["X", "O"]
+    posiciones_vacias = [(i, j) for i in range(3) for j in range(3)]
+    random.shuffle(posiciones_vacias)  # Mezclamos las posiciones para simular jugadas aleatorias
+
+    for turno, (i, j) in zip(turnos * 5, posiciones_vacias):  # 5 turnos por jugador (9 casillas en total)
+        tablero[i][j] = turno
 
 # Inicializa el tablero vacío
 tablero = [[" " for _ in range(3)] for _ in range(3)]
 
-# Ejemplo: Realizamos una jugada automática
-print("Tablero inicial:")
-mostrar_tablero(tablero)
+# Simulamos una partida completa
+partida_completa(tablero)
 
-jugada_automatica(tablero)
-
-print("Tablero después de la jugada automática:")
+print("Tablero al final de una partida completa:")
 mostrar_tablero(tablero)
