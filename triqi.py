@@ -14,12 +14,16 @@ def is_full(board):
     # ... (código para verificar si el tablero está lleno, similar al original)
 
 def fill_randomly(board):
-    """Llena las casillas vacías del tablero de forma aleatoria."""
+    """Llena las casillas vacías del tablero de forma aleatoria, evitando victorias anticipadas."""
     players = ["X", "O"]
-    for i in range(3):
-        for j in range(3):
-            if board[i][j] == " ":
+    while True:
+        i = random.randint(0, 2)
+        j = random.randint(0, 2)
+        if board[i][j] == " ":
+            # Evita victorias inmediatas del oponente
+            if not check_winner(board, players[(players.index("X") + 1) % 2]):
                 board[i][j] = random.choice(players)
+                break
 
 def play():
     """Juega una partida de tres en raya."""
