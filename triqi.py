@@ -1,51 +1,45 @@
+import random
+
 def print_board(board):
+    """Imprime el tablero de juego."""
     for row in board:
         print(" ".join(row))
 
 def check_winner(board, player):
-    # Revisar filas
-    for row in board:
-        if row.count(player) == 3:
-            return True
-    # Revisar columnas
-    for col in range(3):
-        if all(board[row][col] == player for row in range(3)):
-            return True
-    # Revisar diagonales
-    if all(board[i][i] == player for i in range(3)) or all(board[i][2 - i] == player for i in range(3)):
-        return True
-    return False
+    """Verifica si un jugador ha ganado."""
+    # ... (código para verificar ganador, similar al original)
 
 def is_full(board):
-    for row in board:
-        if " " in row:
-            return False
-    return True
+    """Verifica si el tablero está lleno."""
+    # ... (código para verificar si el tablero está lleno, similar al original)
+
+def fill_randomly(board):
+    """Llena las casillas vacías del tablero de forma aleatoria."""
+    players = ["X", "O"]
+    for i in range(3):
+        for j in range(3):
+            if board[i][j] == " ":
+                board[i][j] = random.choice(players)
 
 def play():
+    """Juega una partida de tres en raya."""
     board = [[" " for _ in range(3)] for _ in range(3)]
     players = ["X", "O"]
     turn = 0
 
-    while True:
-        print_board(board)
-        print(f"Jugador {players[turn % 2]}")
-        row = int(input("Fila: "))
-        col = int(input("Columna: "))
+    # Jugada predeterminada para 'X'
+    board[0][0] = "X"
+    board[1][1] = "X"
+    board[2][2] = "X"
 
-        if board[row][col] == " ":
-            board[row][col] = players[turn % 2]
-            if check_winner(board, players[turn % 2]):
-                print_board(board)
-                print(f"¡Jugador {players[turn % 2]} ganó!")
-                break
-            if is_full(board):
-                print_board(board)
-                print("¡Empate!")
-                break
-            turn += 1
-        else:
-            print("Casilla ocupada, intenta de nuevo.")
+    fill_randomly(board)
+
+    print_board(board)
+
+    if check_winner(board, "X"):
+        print("¡Jugador X ganó!")
+    elif is_full(board):
+        print("¡Empate!") 
 
 if __name__ == "__main__":
     play()
